@@ -3,7 +3,7 @@ Algoritmo para predecir el movimiento de un macro frame.
 
 Algoritmo realizado en python 3.6.0.
 
-# Modulos usados:
+# Módulos Usados:
 ```
   Numpy
   Pillow
