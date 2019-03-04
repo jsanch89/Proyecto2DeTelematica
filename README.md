@@ -1,7 +1,7 @@
 # Proyecto HPC Telemática
-Algoritmo para predecir el movimiento de un macro frame 
+Algoritmo para predecir el movimiento de un macro frame.
 
-Algoritmo realizado en python 3.6.0
+Algoritmo realizado en python 3.6.0.
 
 # Modulos usados:
 ```
