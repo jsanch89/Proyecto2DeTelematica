@@ -31,7 +31,7 @@ inline unsigned char * readBMP(char* filename){
   int width = *(int*) &info[18];
   int height = *(int*) &info[22];
   int bpp = *(int*) &info[28];
-  cerr << "BPP = " << bpp << endl;
+  //cerr << "BPP = " << bpp << endl;
   if (bpp != 8){
     puts("You have to enter a gray scale image");
     exit(1);
@@ -40,6 +40,7 @@ inline unsigned char * readBMP(char* filename){
   int size = 3 * width * height;
   unsigned char* data = new unsigned char[size];
   fread(data, sizeof(unsigned char), size, f);
+  //cerr << data << endl;
   fclose(f);
   for(i = 0; i < size; i += 3){
     unsigned char tmp = data[i];
@@ -60,12 +61,11 @@ inline int calculate_cost(lint i, lint j, lint dx, lint dy){
 
 
 
-inline void ** compute_matrix(lint width1, lint height1, lint width2, lint height2){
+inline void compute_matrix(lint width1, lint height1, lint width2, lint height2){
   int min = (1 << 30 - 1);
   lint min_x, min_y, min_dx, min_dy;
   min_x = min_y = min_dx = min_dy = 0;
   lint i, j, dx, dy;
-  int __temp__[MAX_HRIGH]
   for(i = 0; i < 1 + width1 - MAX_SIZE_MB; ++i){
     for(j = 0; j < 1 + height2 - MAX_SIZE_MB; ++j){
       for(dx = 0; dx < 1 + width2 - MAX_SIZE_MB; ++dx){
@@ -76,15 +76,18 @@ inline void ** compute_matrix(lint width1, lint height1, lint width2, lint heigh
 	      min = cur_cost;
 	      min_x = i, min_y = j;
 	      min_dx = dx, min_dy = dy;
-	      break;
+	      __result__[i][j] = 0;
+	      return;
 	    }else{
 	      if(cur_cost < min){
 		min = cur_cost;
 	      }
 	      min_x = i, min_y = j, min_dx = dx, min_dy = dy;
+	      __result__[i][j] = min;
 	    }
 	  }
 	}
+	//cerr << __result__[i][j] << endl;
       }
     }
   }
@@ -100,15 +103,20 @@ void * precompute_matrix(unsigned char * _frame1, unsigned char * _frame2){
       frame2[i][j] = (_frame2[(int)(i * global_width + j)]);
     }
   }
+  //cerr << "Here" << endl;
 }
 
 char * filename1 = "data/lena_gray.bmp";
-char * filename2 = "data/lena_gray_copy.bmp";
+char * filename2 = "data/lena_gray.bmp";
 int main(int argc, char ** argv, char ** env){
   //printf("%s\n", filename1);
   unsigned char * _frame1 = readBMP(filename1);
   unsigned char * _frame2 = readBMP(filename2);
+  for (int i = 0; i < sizeof(_frame1)/sizeof(_frame1[0]); ++i){
+    cerr << _frame1[i] << " " << _frame2[i] << endl;
+  }
   void * result = precompute_matrix(_frame1, _frame2);
   compute_matrix(global_width, global_height, global_width, global_height);
+  // Now __result__(i, j) is the min(i+dx, j + dx), i=1,2,3,...; j = 1, 2, 3, ...; dx, dx in {16}
   return 0;
 }
