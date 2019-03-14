@@ -14,7 +14,7 @@ const int MAX_WIDTH = (int)1000;
 const int MAX_HEIGHT = (int)1000;
 
 char frame1[MAX_WIDTH][MAX_HEIGHT], frame2[MAX_WIDTH][MAX_HEIGHT];
-int __result__[MAX_WIDTH][MAX_HEIGHT];
+int __result__[MAX_WIDTH - 16][MAX_HEIGHT - 16];
 
 int global_width = -1, global_height = -1;
 
@@ -85,42 +85,43 @@ inline int calculate_cost(lint i, lint j, lint dx, lint dy)
 
 inline void compute_matrix(lint width1, lint height1, lint width2, lint height2)
 {
-#pragma omp parallel for
+  int min = (1 << 30 - 1);
+  int min_x, min_y, min_dx, min_dy;
+  min_x = min_y = min_dx = min_dy = 0;
+  int i, j, dx, dy;
+
+#pragma omp parallel
   {
-    int min;
-    int min_x, min_y, min_dx, min_dy;
-    min_x = min_y = min_dx = min_dy = 0;
-    int i, j, dx, dy;
-    for (i = 0; i < 1 + width1 - MAX_SIZE_MB; ++i)
+    for (i = 0; i < 1 + width1 - MAX_SIZE_MB - 16; i += 16)
     {
-      for (j = 0; j < 1 + height2 - MAX_SIZE_MB; ++j)
+      for (j = 0; j < 1 + height2 - MAX_SIZE_MB - 16; j += 16)
       {
-        min = (1 << 30 - 1);
         for (dx = 0; dx < 1 + width2 - MAX_SIZE_MB; ++dx)
         {
           for (dy = 0; dy < 1 + height2 - MAX_SIZE_MB; ++dy)
           {
-            //if( i != dx && j != dy){
-            int cur_cost = calculate_cost(i, j, dx, dy);
-            if (cur_cost == 0)
+            if (i != dx && j != dy)
             {
-              min = cur_cost;
-              min_x = i, min_y = j;
-              min_dx = dx, min_dy = dy;
-              __result__[i][j] = 0;
-              break;
-            }
-            else
-            {
-              if (cur_cost < min)
+              int cur_cost = calculate_cost(i, j, dx, dy);
+              if (cur_cost == 0)
               {
                 min = cur_cost;
+                min_x = i, min_y = j;
+                min_dx = dx, min_dy = dy;
+                __result__[i][j] = 0;
+                break;
               }
-              min_x = i, min_y = j, min_dx = dx, min_dy = dy;
-              __result__[i][j] = min;
+              else
+              {
+                if (cur_cost < min)
+                {
+                  min = cur_cost;
+                }
+                min_x = i, min_y = j, min_dx = dx, min_dy = dy;
+                __result__[i / 16][j / 16] = min;
+              }
             }
           }
-          //}
           //cerr << __result__[i][j] << endl;
         }
       }
@@ -145,7 +146,7 @@ void *precompute_matrix(unsigned char *_frame1, unsigned char *_frame2)
 }
 
 char *filename1 = (char *)"data/lena_gray.bmp";
-char *filename2 = (char *)"data/lena_gray_copy.bmp";
+char *filename2 = (char *)"data/lena_gray.bmp";
 int main(int argc, char **argv, char **env)
 {
   unsigned char *_frame1 = readBMP(filename1);
