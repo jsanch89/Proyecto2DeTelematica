@@ -13,7 +13,7 @@ const int MAX_WIDTH = (int) 1000;
 const int MAX_HEIGHT = (int) 1000;
 
 char frame1[MAX_WIDTH][MAX_HEIGHT], frame2[MAX_WIDTH][MAX_HEIGHT]; 
-int __result__[MAX_WIDTH][MAX_HEIGHT];
+int __result__[MAX_WIDTH - 16][MAX_HEIGHT - 16];
 
 int global_width = -1, global_height = -1;
 
@@ -90,15 +90,13 @@ inline void compute_matrix(lint width1, lint height1, lint width2, lint height2)
   int min_x, min_y, min_dx, min_dy;
   min_x = min_y = min_dx = min_dy = 0;
   int i, j, dx, dy;
-  int cnt = 0;
-  for(i = 0; i < 1 + width1 - MAX_SIZE_MB; ++i){
-    for(j = 0; j < 1 + height2 - MAX_SIZE_MB; ++j){
+  for(i = 0; i < 1 + width1 - MAX_SIZE_MB - 16; i += 16){
+    for(j = 0; j < 1 + height2 - MAX_SIZE_MB - 16; j += 16){
       for(dx = 0; dx < 1 + width2 - MAX_SIZE_MB; ++dx){
 	for(dy = 0; dy < 1 + height2 - MAX_SIZE_MB; ++dy){
-	  //if( i != dx && j != dy){
+	  if( i != dx && j != dy){
 	    int cur_cost = calculate_cost(i, j, dx, dy);
 	    if(cur_cost == 0){
-	      cnt += 1;
 	      min = cur_cost;
 	      min_x = i, min_y = j;
 	      min_dx = dx, min_dy = dy;
@@ -109,17 +107,13 @@ inline void compute_matrix(lint width1, lint height1, lint width2, lint height2)
 		min = cur_cost;
 	      }
 	      min_x = i, min_y = j, min_dx = dx, min_dy = dy;
-	      __result__[i][j] = min;
+	      __result__[i / 16][j / 16] = min;
 	    }
 	  }
-	//}
+	}
 	//cerr << __result__[i][j] << endl;
       }
     }
-  }
-  cerr << cnt << endl;
-  if(cnt == global_width * global_height){
-    cerr << "It works" << endl;
   }
 }
 
@@ -137,8 +131,8 @@ void * precompute_matrix(unsigned char * _frame1, unsigned char * _frame2){
   //cerr << (eq ? "Yes": "No") << endl;
 }
 
-char * filename1 = (char *) "data/w3c_home_gray.bmp";
-char * filename2 = (char * ) "data/w3c_home_gray.bmp";
+char * filename1 = (char *) "data/lena_gray.bmp";
+char * filename2 = (char * ) "data/lena_gray.bmp";
 int main(int argc, char ** argv, char ** env){
   unsigned char * _frame1 = readBMP(filename1);
   unsigned char * _frame2 = readBMP(filename2);

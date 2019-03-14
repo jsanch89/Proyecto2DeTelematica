@@ -46,8 +46,6 @@ unsigned char* readBMP(char* filename)
   return data;
 }
 
-
-
 inline int calculate_cost(lint i, lint j, lint dx, lint dy){
   int cost = 0;
   for(lint di = 0; di < MAX_SIZE_MB; ++di)
@@ -105,7 +103,7 @@ char * filename1 = (char *) "./../data/w3c_home_gray.bmp";
 char * filename2 = (char * ) "./../data/w3c_home_gray.bmp";
 int main(int argc, char ** argv, char ** env){
   /*Just a MPI template.*/
-
+  
   //Initialize the MPI enviroment
   MPI_Init(&argc, &argv);
   
@@ -117,8 +115,9 @@ int main(int argc, char ** argv, char ** env){
   int world_rank;
   MPI_Comm_rank(MPI_COMM_WORLD, &world_rank);
 
-
-  
+  if(world_rank == 1){
+    
+  }
   // Start the execution
   unsigned char * _frame1 = readBMP(filename1);
   unsigned char * _frame2 = readBMP(filename2);
