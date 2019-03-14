@@ -6,7 +6,7 @@ Julian Andres Sanchez Alzate - jsanch89@eafit.edu.co
 Anderson Daniel Grajales Alzate - agrajal7@eafit.edu.co
 ```
 
-## Definición del problema
+## 1. Definición del problema
 
 El algoritmo de compresión de video MPEG, utiliza una técnica conocida como Vectores de Movimiento, el cual le permite realizar la compresión temporal de frames P y B. [https://es.wikipedia.org/wiki/MPEG-2](https://es.wikipedia.org/wiki/MPEG-2). \
 La técnica consiste en predecir hacia donde se mueven los macro-bloques (16 x 16 pixeles) de un frame i en el frame i+1. Se realiza una búsqueda hacia delante (frames P) y además hacía atrás (frames B). Para este ejercicio solo se realizará búsqueda hacia delante. \
@@ -20,9 +20,9 @@ El criterio para moverse dentro de la región de búsqueda, no es parte del est�
 <b>Criterio de parada</b>: cuando la función anterior es igual a cero (0), indica que ha encontrado el macro-bloque en el destino (frame i+1) y debería parar allí, si la función no es igual a cero (0), deberá encontrar el valor mínimo. Es decir, <b><i>Min</i></b> { <i>val-función en región búsqueda</i> }.
 El resultado de la localización del macro-bloque de referencia en la región de búsqueda en el siguiente frame, será un una pareja (xi, yi) donde inicia el macrobloque en el frame destino(i+1).
 
-## OpenMP
+## 2. OpenMP
 * [Algoritmo de ejecución con OpenMP](openmp.md)
-## MPI
+## 3. MPI
 * [Algoritmo de ejecución con MPI](mpi.md)
-## PCAM(OpenMP y MPI combinados) 
+## 4. PCAM(OpenMP y MPI combinados) 
 * [Algoritmo de ejecución con PCAM](pcam.md)
