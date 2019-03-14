@@ -144,8 +144,8 @@ void *precompute_matrix(unsigned char *_frame1, unsigned char *_frame2)
   //cerr << (eq ? "Yes": "No") << endl;
 }
 
-char *filename1 = (char *)"data/lena_gray.bmp";
-char *filename2 = (char *)"data/lena_gray_copy.bmp";
+char *filename1 = (char *)"data/lena_gray1.bmp";
+char *filename2 = (char *)"data/lena_gray_copy1.bmp";
 int main(int argc, char **argv, char **env)
 {
   unsigned char *_frame1 = readBMP(filename1);
