@@ -85,7 +85,7 @@ inline int calculate_cost(lint i, lint j, lint dx, lint dy)
 
 inline void compute_matrix(lint width1, lint height1, lint width2, lint height2)
 {
-#pragma omp parallel
+#pragma omp parallel for
   {
     int min;
     int min_x, min_y, min_dx, min_dy;
