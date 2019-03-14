@@ -107,7 +107,7 @@ int main(int argc, char ** argv, char ** env){
   /*Just a MPI template.*/
 
   //Initialize the MPI enviroment
-  MPI_Init(NULL, NULL);
+  MPI_Init(&argc, &argv);
   
   // Get the number of processes
   int world_size;
