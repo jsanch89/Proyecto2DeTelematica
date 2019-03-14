@@ -93,9 +93,9 @@ inline void compute_matrix(lint width1, lint height1, lint width2, lint height2)
     int i, j, dx, dy;
     for (i = 0; i < 1 + width1 - MAX_SIZE_MB; ++i)
     {
-      min =  = (1 << 30 - 1);
       for (j = 0; j < 1 + height2 - MAX_SIZE_MB; ++j)
       {
+        min = (1 << 30 - 1);
         for (dx = 0; dx < 1 + width2 - MAX_SIZE_MB; ++dx)
         {
           for (dy = 0; dy < 1 + height2 - MAX_SIZE_MB; ++dy)
@@ -144,8 +144,8 @@ void *precompute_matrix(unsigned char *_frame1, unsigned char *_frame2)
   //cerr << (eq ? "Yes": "No") << endl;
 }
 
-char *filename1 = (char *)"data/lena_gray1.bmp";
-char *filename2 = (char *)"data/lena_gray_copy1.bmp";
+char *filename1 = (char *)"data/lena_gray.bmp";
+char *filename2 = (char *)"data/lena_gray_copy.bmp";
 int main(int argc, char **argv, char **env)
 {
   unsigned char *_frame1 = readBMP(filename1);
