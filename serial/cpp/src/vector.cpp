@@ -60,7 +60,7 @@ int** compute_matrix(int width1, int height1, int width2, int height2)
                 {
                     if (i != dx && j != dy)
                     {
-                        int cur_cost = calculate_cost(i, j, dx, dy);
+                        int cur_cost = calculate_cost(i, j*height1, dx, dy*height2);
                         if (cur_cost == 0)
                         {
                             min = cur_cost;
