@@ -17,21 +17,5 @@ A continuación se presenta la función de similitud entre dos (2) macro-bloques
 ![Equacion1](equacion1.gif) \
 Donde Vn  es el macro-bloque de referencia (en el frame i), Vm es el macro-bloque destino (en el frame i+1). dx y dy representan los desplazamiento en la región de búsqueda, por ejemplo, si dx=0 y dy=0, se está intentando hacer matching exactamente en la misma posición. \
 El criterio para moverse dentro de la región de búsqueda, no es parte del estándar, para el caso de este ejercicio se utilizará búsqueda exhaustiva, es decir, en el peor de los casos (si no lo encuentra), se recorre toda la región de búsqueda con incrementos en dx y dy de un (1) pixel. \
-<b>Criterio de parada</b>: cuando la función anterior es igual a cero (0), indica que ha encontrado el macro-bloque en el destino (frame i+1) y debería parar allí, si la función no es igual a cero (0), deberá encontrar el valor mínimo. \
-Es decir Min { val-función en región búsqueda }. \
-
+<b>Criterio de parada</b>: cuando la función anterior es igual a cero (0), indica que ha encontrado el macro-bloque en el destino (frame i+1) y debería parar allí, si la función no es igual a cero (0), deberá encontrar el valor mínimo. Es decir, <b><i>Min</i></b> { <i>val-función en región búsqueda</i> }.
 El resultado de la localización del macro-bloque de referencia en la región de búsqueda en el siguiente frame, será un una pareja (xi, yi) donde inicia el macrobloque en el frame destino(i+1).
-
-# Módulos Usados:
-```
-  Numpy
-  Pillow
-```
-
-# Serial (Ejecución)
-Para ejecutar esta versión del algoritmo es necesario tener python 3.6.0 y los módulos anteriormente mencionados. Luego de asegurarse que están instalados, debe abrir la terminal o línea de comandos. Finalmente, ingrese a la carpeta serial y ejecute el comando: 
-
-```
-  python VectorDeMovimiento.py
-```
-
