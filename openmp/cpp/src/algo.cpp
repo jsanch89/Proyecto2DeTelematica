@@ -90,9 +90,8 @@ inline void compute_matrix(lint width1, lint height1, lint width2, lint height2)
   min_x = min_y = min_dx = min_dy = 0;
   int i, j, dx, dy;
 
-#pragma omp parallel
-  {
-    for (i = 0; i < 1 + width1 - MAX_SIZE_MB - 16; i += 16)
+#pragma omp parallel for
+   for (i = 0; i < 1 + width1 - MAX_SIZE_MB - 16; i += 16)
     {
       for (j = 0; j < 1 + height2 - MAX_SIZE_MB - 16; j += 16)
       {
@@ -126,7 +125,6 @@ inline void compute_matrix(lint width1, lint height1, lint width2, lint height2)
         }
       }
     }
-  }
 }
 
 void *precompute_matrix(unsigned char *_frame1, unsigned char *_frame2)
@@ -145,8 +143,8 @@ void *precompute_matrix(unsigned char *_frame1, unsigned char *_frame2)
   //cerr << (eq ? "Yes": "No") << endl;
 }
 
-char *filename1 = (char *)"data/lena_gray.bmp";
-char *filename2 = (char *)"data/lena_gray.bmp";
+char *filename1 = (char *)"./../../../data/lena_gray.bmp";
+char *filename2 = (char *)"./../../../data/lena_gray_copy.bmp";
 int main(int argc, char **argv, char **env)
 {
   unsigned char *_frame1 = readBMP(filename1);
