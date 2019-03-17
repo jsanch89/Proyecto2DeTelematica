@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <cstdlib>
 #include <string.h>
+#include <omp.h>
 
 typedef int sint;
 typedef int lint;
@@ -85,11 +86,12 @@ inline int calculate_cost(lint i, lint j, lint dx, lint dy){
 
 
 
-inline void compute_matrix(lint width1, lint height1, lint width2, lint height2){
-  int min = (1 << 30 - 1);
+inline void compute_matrix(lint width1, lint height1, lint width2, lint height2){  
+int min = (1 << 30 - 1);
   int min_x, min_y, min_dx, min_dy;
   min_x = min_y = min_dx = min_dy = 0;
   int i, j, dx, dy;
+#pragma omp parallel for
   for(i = 0; i < 1 + width1 - MAX_SIZE_MB - 16; i += 16){
     for(j = 0; j < 1 + height2 - MAX_SIZE_MB - 16; j += 16){
       for(dx = 0; dx < 1 + width2 - MAX_SIZE_MB; ++dx){
