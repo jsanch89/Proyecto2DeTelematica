@@ -25,5 +25,5 @@ El resultado de la localización del macro-bloque de referencia en la región de
 * [Algoritmo de ejecución con OpenMP](openmp.md)
 ## 3. MPI
 * [Algoritmo de ejecución con MPI](mpi.md)
-## 4. PCAM (OpenMP y MPI combinados) 
+## 4. PCAM (Metodología) 
 * [Algoritmo de ejecución con PCAM](pcam.md)
