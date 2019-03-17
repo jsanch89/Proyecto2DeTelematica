@@ -20,7 +20,7 @@ El criterio para moverse dentro de la región de búsqueda, no es parte del est�
 <b>Criterio de parada</b>: cuando la función anterior es igual a cero (0), indica que ha encontrado el macro-bloque en el destino (frame i+1) y debería parar allí, si la función no es igual a cero (0), deberá encontrar el valor mínimo. Es decir, <b><i>Min</i></b> { <i>val-función en región búsqueda</i> }.
 El resultado de la localización del macro-bloque de referencia en la región de búsqueda en el siguiente frame, será un una pareja (xi, yi) donde inicia el macrobloque en el frame destino(i+1).
 ### 1.1. Algoritmo
-![Algoritmo](algoritmo.png)
+![Algoritmo](algoritmo.PNG)
 ## 2. OpenMP
 * [Algoritmo de ejecución con OpenMP](openmp.md)
 ## 3. MPI
