@@ -91,9 +91,9 @@ inline void compute_matrix(lint width1, lint height1, lint width2, lint height2)
   int i, j, dx, dy;
 
 #pragma omp parallel for
-   for (i = 0; i < 1 + width1 - MAX_SIZE_MB - 16; i += 16)
+   for (i = 0; i < 1 + width1 - MAX_SIZE_MB; i += 16)
     {
-      for (j = 0; j < 1 + height2 - MAX_SIZE_MB - 16; j += 16)
+      for (j = 0; j < 1 + height2 - MAX_SIZE_MB; j += 16)
       {
         for (dx = 0; dx < 1 + width2 - MAX_SIZE_MB; ++dx)
         {
@@ -131,9 +131,9 @@ void *precompute_matrix(unsigned char *_frame1, unsigned char *_frame2)
 {
   int i, j;
   //bool eq = true;
-  for (i = 0; i < global_width; ++i)
+  for (i = 0; i < global_height; ++i)
   {
-    for (j = 0; j < global_height; ++j)
+    for (j = 0; j < global_width; ++j)
     {
       frame1[i][j] = (_frame1[(int)(i * global_width + j)]);
       frame2[i][j] = (_frame2[(int)(i * global_width + j)]);
@@ -143,8 +143,8 @@ void *precompute_matrix(unsigned char *_frame1, unsigned char *_frame2)
   //cerr << (eq ? "Yes": "No") << endl;
 }
 
-char *filename1 = (char *)"./../../../data/lena_gray.bmp";
-char *filename2 = (char *)"./../../../data/lena_gray_copy.bmp";
+char *filename1 = (char *)"./../../../data/imagenes/frame1.bmp";
+char *filename2 = (char *)"./../../../data/imagenes/frame2.bmp";
 int main(int argc, char **argv, char **env)
 {
   unsigned char *_frame1 = readBMP(filename1);

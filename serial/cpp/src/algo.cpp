@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <cstdlib>
 #include <string.h>
-#include <omp.h>
 
 typedef int sint;
 typedef int lint;
@@ -91,18 +90,18 @@ int min = (1 << 30 - 1);
   int min_x, min_y, min_dx, min_dy;
   min_x = min_y = min_dx = min_dy = 0;
   int i, j, dx, dy;
-#pragma omp parallel for
-  for(i = 0; i < 1 + width1 - MAX_SIZE_MB - 16; i += 16){
-    for(j = 0; j < 1 + height2 - MAX_SIZE_MB - 16; j += 16){
-      for(dx = 0; dx < 1 + width2 - MAX_SIZE_MB; ++dx){
-	for(dy = 0; dy < 1 + height2 - MAX_SIZE_MB; ++dy){
+
+  for(i = 0; i < width1 - MAX_SIZE_MB + 1; i += 16){
+    for(j = 0; j < height2 - MAX_SIZE_MB + 1; j += 16){
+      for(dx = 0; dx < width2 - MAX_SIZE_MB +1; ++dx){
+	for(dy = 0; dy < height2 - MAX_SIZE_MB +1; ++dy){
 	  if( i != dx && j != dy){
 	    int cur_cost = calculate_cost(i, j, dx, dy);
 	    if(cur_cost == 0){
 	      min = cur_cost;
 	      min_x = i, min_y = j;
 	      min_dx = dx, min_dy = dy;
-	      __result__[i][j] = 0;
+	      __result__[i/width2][j/height2] = 0;
 	      break;
 	    }else{
 	      if(cur_cost < min){
@@ -123,18 +122,19 @@ int min = (1 << 30 - 1);
 void * precompute_matrix(unsigned char * _frame1, unsigned char * _frame2){
   int i, j;
   //bool eq = true;
-  for(i = 0; i < global_width; ++i){
-    for(j = 0; j < global_height; ++j){
+  for(i = 0; i < global_height; ++i){
+    for(j = 0; j < global_width; ++j){
       frame1[i][j] = (_frame1[(int)(i * global_width + j)]);
       frame2[i][j] = (_frame2[(int)(i * global_width + j)]);
+      //cout<<i<<" "<<j<<endl;
       //      if(frame1[i][j] != frame2[i][j]) eq = false;
    }
   }
   //cerr << (eq ? "Yes": "No") << endl;
 }
 
-char * filename1 = (char *) "data/lena_gray.bmp";
-char * filename2 = (char * ) "data/lena_gray.bmp";
+char * filename1 = (char *)  "../../../data/imagenes/frame1.bmp";
+char * filename2 = (char * ) "../../../data/imagenes/frame2.bmp";
 int main(int argc, char ** argv, char ** env){
   unsigned char * _frame1 = readBMP(filename1);
   unsigned char * _frame2 = readBMP(filename2);
