@@ -90,7 +90,7 @@ inline void compute_matrix(lint width1, lint height1, lint width2, lint height2)
   min_x = min_y = min_dx = min_dy = 0;
   int i, j, dx, dy;
 
-#pragma omp parallel for
+#pragma omp parallel for schedule(dynamic)
    for (i = 0; i < 1 + width1 - MAX_SIZE_MB; i += 16)
     {
       for (j = 0; j < 1 + height2 - MAX_SIZE_MB; j += 16)
